@@ -8,8 +8,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>AVR simulator</title>
         <meta name="description" content="Simulate the ATMEGA1280 MCU online">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
         <link rel="stylesheet" href="vendor/normalize-css/normalize.css">
         <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
@@ -23,7 +21,7 @@
 
         <nav class="blue-grey darken-3" role="navigation">
             <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">simavr<span class="sep">.</span>js</a>
-                <ul class="right hide-on-med-and-down">
+                <ul class="right">
                     <li>
                         <a href="#modal1" class="waves-effect waves-light modal-trigger"><i class="fa fa-folder-open"></i> Open <b>.hex</b> file</a>
                         <div id="modal1" class="modal">
@@ -114,5 +112,23 @@
         <script src="vendor/nunjucks.min.js"></script>
         <script src="js/main.js"></script>
         <script src="default.js"></script>
+
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setDomains", ["*.wq.lc/avr"]]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//analytics.wq.lc/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 7]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//analytics.wq.lc/piwik.php?idsite=7" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+
     </body>
 </html>
