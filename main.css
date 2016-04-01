@@ -1,0 +1,81 @@
+.mcu-board {
+ /*   width: 700px;
+    height: 500px;*/
+    display: block;
+    user-select: none;
+}
+
+.mcu-leds ul {
+    user-select: none;
+    clear: both;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 0px;
+}
+
+.mcu-leds ul li {
+    user-select: none;
+    font-size: 9px;
+    color: #fff;
+    overflow: hidden;
+    z-index: 1;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    padding: 0;
+    /*border-radius: 50%;*/
+    transition: 0.1s;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+
+.mcu-btns ul {
+    user-select: none;
+    padding: 0;
+    margin-top: 4px;
+    margin-bottom: 0px;
+    clear: both;
+}
+
+.mcu-btns ul li {
+    user-select: none;
+    clear: both;
+    font-size: 9px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    padding: 0;
+    border-radius: 50%;
+    transition: 0.1s;
+    cursor: pointer;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.mcu-terminal {
+    padding: 10px;
+    overflow-y: scroll;
+    max-height: 500px;
+}
+
+.mcu-terminal li {
+    text-align: left;
+}
+
+.file-path-wrapper {
+    color: #111 !important;
+}
+
+.grey-text b, .blue-grey-text b {
+    color: #fff;
+}
+
+.sep {
+    margin-left: 2px;
+    margin-right: 2px;
+}

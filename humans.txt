@@ -1,0 +1,10 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Alexander Müller <donothingloop@gmail.com>
+
+# THANKS
+
+    Michel Pollet -- for simavr

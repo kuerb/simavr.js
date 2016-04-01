@@ -1,0 +1,118 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>AVR simulator</title>
+        <meta name="description" content="Simulate the ATMEGA1280 MCU online">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="vendor/normalize-css/normalize.css">
+        <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="vendor/Materialize/dist/css/materialize.min.css">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <nav class="blue-grey darken-3" role="navigation">
+            <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">simavr<span class="sep">.</span>js</a>
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a href="#modal1" class="waves-effect waves-light modal-trigger"><i class="fa fa-folder-open"></i> Open <b>.hex</b> file</a>
+                        <div id="modal1" class="modal">
+                            <div class="modal-content">
+                                <h4 style="color: rgba(0,0,0,0.87)">Open hex file</h4>
+                                <form action="#" style="color: rgb(0,0,0,0.87)">
+                                    <div class="file-field input-field">
+                                        <div class="btn">
+                                            <span>File</span>
+                                            <input type="file" id="file-sel">
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text">
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul id="nav-mobile" class="side-nav">
+                    <li><a href="#">Navbar Link</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row blue-grey darken-2" style="font-weight: 300">
+            <div class="col offset-s2 white-text text-lighten-5">
+                <p>This simulator is simulating an ATMEGA1280 mcu.<br>Please note that the simulation will run much slower than the real hardware depending on your browser and your machine.<br><b>Elf</b> file loading is not implemented, but you can use <b>avr-objcopy</b> to convert an <b>elf</b> file to the <b>hex</b> format.</p>
+                <pre>avr-objcopy -j .text -j .data -O ihex main.elf main.hex</pre>
+                <p>Currently EEPROM data preloading is not supported, but you can use the EEPROM in the simulation.</p>
+            </div>
+        </div>
+
+        <div class="section no-pad-bot">
+            <div class="container">
+                <div class="row">
+                    <div class="col s4 offset-s1 card center mcu-board" id="mcu">
+                        <div class="card-content">
+                            <span class="card-title grey-text text-darken-4">LEDs</span>
+                            <div id="leds"></div>
+                            <!--<div id="btns"></div>-->
+                        </div>
+                    </div>
+                    <div class="col s4 offset-s1 card center mcu-board" id="mcu">
+                        <div class="card-content">
+                            <span class="card-title grey-text text-darken-4">Buttons</span>
+                            <div id="btns"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row center">
+                    <ul class="mcu-terminal blue-grey darken-4 grey-text text-lighten-2 z-depth-1">
+                        <li>Waiting for file...</li> 
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="height: 150px">
+
+        </div>
+
+        <footer class="page-footer blue-grey darken-3">
+            <div class="footer-copyright">
+                <div class="container">
+                    <span class="white-text">(c) 2016 Alexander Müller - <b>donothingloop@gmail.com</b></span>
+                </div>
+            </div>
+
+            <div style="padding-bottom: 80px">
+                <div class="container">
+                    <span class="grey-text text-lighten-1" style="font-weight: 200">Thanks to <strong>Michel Pollet</strong> for simavr</span><br>
+		    <span class="grey-text text-lighten-2" style="font-weight: 200">The following code is a derivative work of the code from the <strong>simavr</strong> project, which is licensed GPLv3. This code therefore is also licensed under the terms  of the GNU Public License, version 3.</span><br><br>
+		    <span class="grey-text text-lighten-1">Github repositories for the <strong><a href="https://github.com/donothingloop/simavr_emscripten">simavr_emscripten</a></strong> core and <strong><a href="https://github.com/donothingloop/simavr.js">frontend</a></strong>.</span>
+                </div>
+            </div>
+        </footer>
+
+        <script src="js/b64.js"></script>
+        <script src="vendor/jquery/dist/jquery.min.js"></script>
+        <script src="vendor/Materialize/dist/js/materialize.min.js"></script>
+        <script src="vendor/nunjucks.min.js"></script>
+        <script src="js/main.js"></script>
+        <script src="default.js"></script>
+    </body>
+</html>
