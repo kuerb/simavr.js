@@ -106,6 +106,8 @@ var avrsim = {
         this.worker.postMessage({cmd: 'set_pin', port: port, pin: pin, value: value});
     },
     register_btn_handlers: function() {
+        var self = this;
+
         this.btns.forEach(function(val) {
             val.forEach(function(ival) {
                 var elem = $("#btn-" + ival);
@@ -123,7 +125,7 @@ var avrsim = {
                         elem.removeClass("darken-4");
                     }
                     
-                    this.set_pin(port.charCodeAt(0), pin, val);
+                    self.set_pin(port.charCodeAt(0), pin, val);
                 });
             });
         });
