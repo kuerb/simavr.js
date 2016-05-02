@@ -63,6 +63,19 @@
         <div class="section no-pad-bot">
             <div class="container">
                 <div class="row">
+                    <div class="col s4 offset-s1 card">
+                        <div class="card-content">
+                            <span class="card-title">Settings</span>
+
+                            <h6 class="align-left">Simulation speed</h6>
+                            <span class="grey-text text-darken-1 align-left">This slider can be used to control the simulation speed on the cost of higher CPU utilization.</span>
+                            <p class="range-field">
+                                <input type="range" id="speed" min="0" max="100" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col s4 offset-s1 card center mcu-board" id="mcu">
                         <div class="card-content">
                             <span class="card-title grey-text text-darken-4">LEDs</span>
@@ -85,10 +98,24 @@
                 </div>
             </div>
         </div>
-
-        <div class="container" style="height: 150px">
-
+ 
+        <div class="container" style="height: 60px">
         </div>
+
+        <div class="container">
+            <div class="row">
+                <h4>Changelog</h4>
+                <h5><i>1.0</i> - 3.5.2016</h5>
+                <blockquote>
+                    <b>Web worker support</b> - This should make the interface more responsive while the simulator is executing.<br>
+                    <b>Simulation speed</b> - Simulation speed slider added.<br>
+                    <b>General improvements</b> - Rewrite of backend code and general speed improvements of simulation.<br>
+                </blockquote>
+            </div>
+        </div>
+       
+        <div class="container" style="height: 80px">
+        </div>        
 
         <footer class="page-footer blue-grey darken-3">
             <div class="footer-copyright">
@@ -111,7 +138,6 @@
         <script src="vendor/Materialize/dist/js/materialize.min.js"></script>
         <script src="vendor/nunjucks.min.js"></script>
         <script src="js/main.js"></script>
-        <script src="default.js"></script>
 
 <!-- Piwik -->
 <script type="text/javascript">

@@ -2,8 +2,18 @@ var avrsim = {
     timer: false,
     leds: [],
     btns: [],
-    ports: ["L", "K", "J", "H", "G", "F", "E", "D", "C", "B", "A"],
-    init_ports: function() {
+    ports: [],
+    worker: null,
+    get_ports: function() {
+        this.worker.postMessage({cmd: 'get_ports'});
+    },
+    load_ports: function(pstr) {
+        console.log("Registering ports " + pstr);
+
+        for(var i = 0, len = pstr.length; i < len; i++) {
+            this.ports.push(pstr[i]);
+        }
+        
         var self = this;
         this.ports.forEach(function(val) {
             var lobj = [];
@@ -17,34 +27,60 @@ var avrsim = {
             self.leds.push(lobj);
             self.btns.push(bobj);
         });
+
+        this.render();
+    },
+    init_ports: function() {
+        this.get_ports();
+    },
+    print: function(text) {
+        $(".mcu-terminal").append("<li>" + text + "</li>");
+        console.log(text);
+    },
+    worker_cb: function(e, self) {
+        var d = e.data;
+        
+        if(d.cmd == 'port_changed') {
+            self.port_changed(d.port, d.value);
+        } else if(d.cmd == 'get_ports') {
+            self.load_ports(d.pstr);
+        } else if(d.cmd == 'print') {
+            self.print(d.text);
+        }
+    },
+    init_worker: function() {
+        this.print("Initializing worker...");
+        this.worker = new Worker('js/worker.js');
+
+        var self = this;
+        this.worker.addEventListener('message', function(e) {
+            self.worker_cb(e, self);
+        }.bind(self), false);
+        this.worker.postMessage({cmd: 'init'});
+    },
+    set_speed: function(speed) {
+        this.worker.postMessage({
+            cmd: 'set_speed',
+            speed: speed
+        });
+    },
+    init_slider: function() {
+        var self = this;
+
+        $('#speed').on('change', function() {
+            var s = 101 - $('#speed').val();
+            self.set_speed(s);
+        }.bind(self));
     },
     init: function() {
         nunjucks.configure({autoescape: true});
 
+        this.init_worker();
         this.init_ports();
-        this.render();
-    },
-    run: function(name) {
-        var initf =  Module.cwrap('init', 'void', ['string']);
-
-        console.log(name);
-        initf(name);
-        this.timer = window.setInterval(function() {
-            Module._run();
-        }, 20);
+        this.init_slider();
     },
     create_file: function(data) {
-        // data:;base64,
-	dat = data;
-	var dat = dat.substring(dat.indexOf(",") + 1);
-	dat = atob(dat);
-
-        console.log("creating file");
-        var name = "f-" +  Math.floor(Date.now() / 1000) + ".hex";
-
-        FS.createDataFile("/", name, dat, true, false);
-        console.log("running");
-        this.run(name);
+        this.worker.postMessage({cmd: 'create_file', data: data});
     },
     handle_load: function() {
         if(this.timer != false)
@@ -66,6 +102,9 @@ var avrsim = {
             reader.readAsDataURL(file);
         }
     },
+    set_pin: function(port, pin, value) {
+        this.worker.postMessage({cmd: 'set_pin', port: port, pin: pin, value: value});
+    },
     register_btn_handlers: function() {
         this.btns.forEach(function(val) {
             val.forEach(function(ival) {
@@ -76,19 +115,15 @@ var avrsim = {
                     var pin = ival.substring(2, 3);
                     var val;
 
-                    console.log(port);
-
-                    if(elem.hasClass("darken-2")) {
+                    if(!elem.hasClass("darken-4")) {
                         val = 1;
-                        elem.removeClass("darken-2");
                         elem.addClass("darken-4");
                     } else {
                         val = 0;
                         elem.removeClass("darken-4");
-                        elem.addClass("darken-2");
                     }
-
-                    Module._set_pin(port.charCodeAt(0), pin, val);
+                    
+                    this.set_pin(port.charCodeAt(0), pin, val);
                 });
             });
         });
@@ -105,45 +140,29 @@ var avrsim = {
             $('#btns').append(res);
             self.register_btn_handlers();
         });
+    },
+    port_changed: function(port, val) {
+        for(var pin = 0; pin < 8; pin++) {
+            var id = "led-P" + String.fromCharCode(port) + pin;
+            var e = document.getElementById(id);
 
+            // this is faster than addClass and removeClass, but not as flexible
+            // because the color is hardcoded
+            if(val & (1<<pin)) {
+                e.setAttribute('style', 'background-color: #F44336 !important');
+            } else {
+                e.setAttribute('style', 'background-color: #9e9e9e !important');
+            }
+        }
     }
 };
 
-avrsim.init();
-
-var Module = {
-     arguments: ["-v", "--menu"],
-     preRun: [],
-     postRun: [],
-     print: (function() {
-         return function(text) {
-            $(".mcu-terminal").append("<li>" + text + "</li>");
-         };
-     })(),
-     printErr: function(text) {
-	 $(".mcu-terminal").append("<li>" + text + "</li>");
-         console.log(text);
-     },
-     totalDependencies: 0,
- };
-
-function pin_changed(port, pin, val) {
-    $("#led-P" + String.fromCharCode(port) + pin).removeClass("grey");
-    $("#led-P" + String.fromCharCode(port) + pin).removeClass("red");
-
-    if(val == 1) {
-        $("#led-P" + String.fromCharCode(port) + pin).addClass("red");
-    } else {
-        $("#led-P" + String.fromCharCode(port) + pin).addClass("grey");
-    }
-}
-
-$(document).ready(function() {
+$(function() {
     $('.modal-trigger').leanModal({
         complete: function() {
             avrsim.handle_load();
         }
     });
-//    Module._init();
-
+    
+    avrsim.init();
 });

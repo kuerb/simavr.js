@@ -79,3 +79,8 @@
     margin-left: 2px;
     margin-right: 2px;
 }
+
+.align-left {
+    align: left;
+    text-align: left;
+}
