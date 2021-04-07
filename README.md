@@ -1,4 +1,5 @@
 # simavr.js
 Frontend for simavr_emscripten
 
-See [http://wq.lc/avr].
+Can be run from this Github Page [https://kuerb.github.io/simavr.js/]
+
